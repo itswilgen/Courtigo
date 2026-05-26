@@ -13,9 +13,29 @@ class DashboardController extends Controller
 {
     public function player()
     {
+        $user = request()->user();
+        $bookings = Booking::with(['court.images', 'payment'])
+            ->where('user_id', $user->id)
+            ->latest('booking_date')
+            ->latest()
+            ->get();
+
         return view('courtigo.dashboards.player', [
-            'bookings' => Booking::with('court')->latest()->take(5)->get(),
-            'favoriteCourts' => Court::with('images')->where('is_featured', true)->take(3)->get(),
+            'user' => $user,
+            'bookings' => $bookings->take(6),
+            'recommendedCourts' => Court::with('images')
+                ->where('status', 'active')
+                ->whereHas('timeSlots', fn ($query) => $query->where('status', 'available'))
+                ->orderByDesc('rating_average')
+                ->take(4)
+                ->get(),
+            'notifications' => $user->notifications()->latest()->take(3)->get(),
+            'metrics' => [
+                'bookings' => $bookings->count(),
+                'confirmed' => $bookings->where('status', 'confirmed')->count(),
+                'spent' => $bookings->sum('total_amount'),
+                'favorites' => Court::where('status', 'active')->where('is_featured', true)->count(),
+            ],
         ]);
     }
 

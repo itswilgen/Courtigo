@@ -15,9 +15,9 @@ class CourtigoController extends Controller
         $courts = Court::query()
             ->with(['images', 'vendorProfile'])
             ->where('status', 'active')
+            ->whereHas('timeSlots', fn ($query) => $query->where('status', 'available'))
             ->latest('is_featured')
             ->latest()
-            ->take(6)
             ->get();
 
         $stats = [
