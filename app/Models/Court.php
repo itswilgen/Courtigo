@@ -2,22 +2,44 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-#[Fillable(['vendor_profile_id', 'name', 'slug', 'location', 'city', 'description', 'hourly_rate', 'surface_type', 'capacity', 'status', 'is_featured', 'rating_average', 'rating_count'])]
 class Court extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'owner_id',
+        'vendor_profile_id',
+        'name',
+        'slug',
+        'location',
+        'city',
+        'description',
+        'price',
+        'hourly_rate',
+        'surface_type',
+        'capacity',
+        'status',
+        'is_featured',
+        'rating_average',
+        'rating_count',
+    ];
 
     protected function casts(): array
     {
         return [
             'is_featured' => 'boolean',
+            'price' => 'decimal:2',
             'hourly_rate' => 'decimal:2',
             'rating_average' => 'decimal:2',
         ];
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'owner_id');
     }
 
     public function vendorProfile()

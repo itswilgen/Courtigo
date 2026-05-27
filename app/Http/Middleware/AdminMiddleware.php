@@ -6,16 +6,16 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class EnsureUserHasRole
+class AdminMiddleware
 {
-    public function handle(Request $request, Closure $next, string ...$roles): Response
+    public function handle(Request $request, Closure $next): Response
     {
         if (! $request->user()) {
             return redirect()->route('login');
         }
 
-        if (! in_array($request->user()->role, $roles, true)) {
-            abort(403, 'This area is restricted to approved Courtigo roles.');
+        if ($request->user()->role !== 'admin') {
+            abort(403, 'Only Courtigo administrators can access this area.');
         }
 
         return $next($request);

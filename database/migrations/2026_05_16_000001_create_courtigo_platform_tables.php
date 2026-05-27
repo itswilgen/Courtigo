@@ -9,7 +9,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('player')->after('password');
             $table->string('phone')->nullable()->after('role');
             $table->string('status')->default('active')->after('phone');
         });
@@ -55,16 +54,18 @@ return new class extends Migration
 
         Schema::create('courts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('owner_id')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('vendor_profile_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('location');
             $table->string('city');
             $table->text('description');
+            $table->decimal('price', 10, 2)->default(0);
             $table->decimal('hourly_rate', 10, 2);
             $table->string('surface_type')->default('acrylic');
             $table->unsignedTinyInteger('capacity')->default(4);
-            $table->string('status')->default('active');
+            $table->string('status')->default('pending');
             $table->boolean('is_featured')->default(false);
             $table->decimal('rating_average', 3, 2)->default(0);
             $table->unsignedInteger('rating_count')->default(0);
@@ -109,6 +110,7 @@ return new class extends Migration
             $table->foreignId('court_time_slot_id')->nullable()->constrained()->nullOnDelete();
             $table->string('reference')->unique();
             $table->date('booking_date');
+            $table->string('time_slot')->nullable();
             $table->time('starts_at');
             $table->time('ends_at');
             $table->decimal('total_amount', 10, 2);
@@ -153,11 +155,14 @@ return new class extends Migration
 
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('booking_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('reported_by')->constrained('users')->cascadeOnDelete();
             $table->foreignId('court_id')->nullable()->constrained()->nullOnDelete();
             $table->string('category');
+            $table->text('message')->nullable();
             $table->text('description');
-            $table->string('status')->default('open');
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }
@@ -178,7 +183,7 @@ return new class extends Migration
         Schema::dropIfExists('vendor_profiles');
 
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['role', 'phone', 'status']);
+            $table->dropColumn(['phone', 'status']);
         });
     }
 };

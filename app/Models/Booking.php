@@ -2,12 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
-#[Fillable(['user_id', 'court_id', 'court_time_slot_id', 'reference', 'booking_date', 'starts_at', 'ends_at', 'total_amount', 'status'])]
 class Booking extends Model
 {
+    protected $fillable = [
+        'user_id',
+        'court_id',
+        'court_time_slot_id',
+        'reference',
+        'booking_date',
+        'time_slot',
+        'starts_at',
+        'ends_at',
+        'total_amount',
+        'status',
+    ];
+
     protected function casts(): array
     {
         return ['booking_date' => 'date', 'total_amount' => 'decimal:2'];
@@ -31,5 +42,10 @@ class Booking extends Model
     public function payment()
     {
         return $this->hasOne(Payment::class);
+    }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
     }
 }
