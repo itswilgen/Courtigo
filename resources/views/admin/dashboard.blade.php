@@ -8,9 +8,9 @@
         <div class="row g-0 align-items-stretch">
             <div class="col-lg-8 p-4 p-xl-5">
                 <div class="admin-kicker mb-2">Court operations</div>
-                <h2 class="display-6 fw-black mb-3">Keep today&apos;s bookings, courts, and member activity on track.</h2>
+                <h2 class="display-6 fw-black mb-3">Keep bookings, courts, and member activity on track.</h2>
                 <p class="text-muted mb-4" style="max-width: 720px;">
-                    Review booking flow, court availability, user activity, and open reports from one workspace built for facility management.
+                    Review court availability, booking flow, user activity, and open reports from one focused admin workspace.
                 </p>
                 <div class="d-flex flex-wrap gap-2">
                     <a class="btn btn-success fw-bold" href="{{ route('admin.bookings.index') }}">
@@ -21,7 +21,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-lg-4 bg-dark text-white p-4 p-xl-5">
+            <div class="col-lg-4 text-white p-4 p-xl-5" style="background: #101828;">
                 <div class="h-100 d-flex flex-column justify-content-between gap-4">
                     <div>
                         <div class="small text-white-50 text-uppercase fw-bold">Today&apos;s bookings</div>
@@ -97,7 +97,14 @@
                                 </td>
                                 <td>{{ $booking->court?->name ?? 'Deleted court' }}</td>
                                 <td>{{ optional($booking->booking_date)->format('M d, Y') }}</td>
-                                <td><span class="status-pill bg-light text-secondary">{{ $booking->status }}</span></td>
+                                <td>
+                                    <span class="status-pill @class([
+                                        'is-success' => in_array($booking->status, ['confirmed', 'completed']),
+                                        'is-warning' => $booking->status === 'pending',
+                                        'is-danger' => $booking->status === 'cancelled',
+                                        'is-neutral' => ! in_array($booking->status, ['confirmed', 'completed', 'pending', 'cancelled']),
+                                    ])">{{ $booking->status }}</span>
+                                </td>
                             </tr>
                         @empty
                             <tr><td colspan="4" class="text-muted py-4">No bookings yet.</td></tr>
@@ -127,7 +134,7 @@
                                     <span class="d-block small text-muted">{{ $user->email }}</span>
                                 </span>
                             </span>
-                            <span class="badge text-bg-light">{{ $user->role }}</span>
+                            <span class="status-pill is-neutral">{{ $user->role }}</span>
                         </a>
                     @empty
                         <div class="text-muted">No users yet.</div>
@@ -155,7 +162,12 @@
                                 <div class="small text-muted">{{ $court->location }} · {{ $court->owner?->name ?? $court->vendorProfile?->user?->name ?? 'No owner listed' }}</div>
                             </div>
                             <div class="d-flex align-items-center gap-2">
-                                <span class="status-pill bg-light text-secondary">{{ $court->status }}</span>
+                                <span class="status-pill @class([
+                                    'is-success' => $court->status === 'approved',
+                                    'is-warning' => $court->status === 'pending',
+                                    'is-danger' => $court->status === 'suspended',
+                                    'is-neutral' => ! in_array($court->status, ['approved', 'pending', 'suspended']),
+                                ])">{{ $court->status }}</span>
                                 <a class="btn btn-sm btn-outline-secondary" href="{{ route('admin.courts.show', $court) }}">Open</a>
                             </div>
                         </div>

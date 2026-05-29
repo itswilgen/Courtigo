@@ -27,6 +27,12 @@
                         <p class="text-3xl font-black text-courtigo-navy">₱{{ number_format($court->hourly_rate) }} <span class="text-sm font-semibold text-slate-500">per hour</span></p>
                     </div>
                     <h2 class="mt-6 text-lg font-black text-courtigo-navy">Live availability</h2>
+                    @error('court_time_slot_id')
+                        <div class="mt-5 rounded border border-red-100 bg-red-50 px-4 py-3 text-sm font-bold text-red-700">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
                     <div class="mt-3 grid grid-cols-2 gap-3">
                         @forelse($court->timeSlots->take(6) as $slot)
                             <button class="rounded border border-slate-200 bg-white px-3 py-3 text-left text-sm transition hover:border-courtigo-blue hover:bg-blue-50 data-[selected=true]:border-courtigo-blue data-[selected=true]:bg-blue-50 data-[selected=true]:ring-2 data-[selected=true]:ring-blue-100" type="button" data-slot-option data-slot-id="{{ $slot->id }}" data-slot-label="{{ $slot->slot_date->format('M d') }} · {{ substr($slot->starts_at, 0, 5) }} - {{ substr($slot->ends_at, 0, 5) }}" aria-pressed="false">
@@ -41,7 +47,11 @@
                     </div>
                     <p class="mt-3 hidden rounded bg-white px-3 py-2 text-sm font-semibold text-courtigo-navy" data-selected-slot-summary></p>
                     @auth
-                        <button class="mt-5 w-full rounded bg-courtigo-green px-5 py-3 font-bold text-white transition hover:bg-green-600 disabled:cursor-not-allowed disabled:bg-slate-300" type="button" data-reserve-button disabled>Choose a slot to reserve</button>
+                        <form class="mt-5" method="POST" action="{{ route('courts.reserve', $court) }}">
+                            @csrf
+                            <input type="hidden" name="court_time_slot_id" value="{{ old('court_time_slot_id') }}" data-selected-slot-input>
+                            <button class="w-full rounded bg-courtigo-green px-5 py-3 font-bold text-white transition hover:bg-green-600 disabled:cursor-not-allowed disabled:bg-slate-300" type="submit" data-reserve-button disabled>Choose a slot to continue</button>
+                        </form>
                     @else
                         <div class="mt-5 rounded border border-blue-100 bg-blue-50 p-4">
                             <p class="text-sm font-bold text-courtigo-navy">Login required to reserve</p>
@@ -78,7 +88,9 @@
                 const reserveButton = document.querySelector('[data-reserve-button]');
                 const loginReserveLink = document.querySelector('[data-login-reserve-link]');
                 const summary = document.querySelector('[data-selected-slot-summary]');
+                const selectedSlotInput = document.querySelector('[data-selected-slot-input]');
                 const loginUrl = loginReserveLink ? new URL(loginReserveLink.href) : null;
+                const initialSlot = @json(old('court_time_slot_id', request('slot')));
 
                 slotButtons.forEach((button) => {
                     button.addEventListener('click', () => {
@@ -97,7 +109,11 @@
 
                         if (reserveButton) {
                             reserveButton.disabled = false;
-                            reserveButton.textContent = `Reserve ${button.dataset.slotLabel}`;
+                            reserveButton.textContent = `Continue to payment · ${button.dataset.slotLabel}`;
+                        }
+
+                        if (selectedSlotInput) {
+                            selectedSlotInput.value = button.dataset.slotId;
                         }
 
                         if (loginReserveLink && loginUrl) {
@@ -109,6 +125,10 @@
                         }
                     });
                 });
+
+                if (initialSlot) {
+                    document.querySelector(`[data-slot-id="${initialSlot}"]`)?.click();
+                }
             })();
         </script>
     @endpush

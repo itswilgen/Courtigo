@@ -10,14 +10,16 @@
                 <div class="admin-kicker mb-2">Operations overview</div>
                 <h2 class="display-6 fw-black mb-3">Manage Courtigo bookings, courts, vendors, and member activity.</h2>
                 <p class="text-muted mb-0" style="max-width: 720px;">
-                    This workspace is separated from the player experience and is built for daily sports facility operations.
+                    A focused workspace for facility operations, account review, and booking performance.
                 </p>
             </div>
             <div class="col-lg-4">
-                <div class="rounded border bg-light p-4">
+                <div class="rounded border p-4" style="background: #fbfcfe;">
                     <div class="small text-muted text-uppercase fw-bold">Total bookings</div>
                     <div class="display-5 fw-black">{{ number_format($metrics['bookings']) }}</div>
-                    <a class="btn btn-sm btn-success fw-bold mt-2" href="{{ route('admin.bookings.index') }}">Open booking desk</a>
+                    <a class="btn btn-sm btn-success mt-2" href="{{ route('admin.bookings.index') }}">
+                        <i class="bi bi-calendar-check me-2"></i>Open booking desk
+                    </a>
                 </div>
             </div>
         </div>
@@ -62,7 +64,7 @@
                                 <div class="fw-bold">{{ $vendor->business_name }}</div>
                                 <div class="small text-muted">{{ $vendor->user?->email }} &middot; {{ $vendor->city }}</div>
                             </div>
-                            <span class="status-pill {{ $vendor->status === 'approved' ? 'bg-success-subtle text-success' : 'bg-warning-subtle text-warning' }}">
+                            <span class="status-pill {{ $vendor->status === 'approved' ? 'is-success' : 'is-warning' }}">
                                 {{ ucfirst($vendor->status) }}
                             </span>
                         </div>
@@ -87,7 +89,7 @@
                         <div class="rounded border p-3">
                             <div class="d-flex align-items-center justify-content-between gap-3">
                                 <div class="fw-bold">{{ $court->name }}</div>
-                                <span class="badge text-bg-light">{{ $court->rating_average }} rating</span>
+                                <span class="status-pill is-neutral">{{ $court->rating_average }} rating</span>
                             </div>
                             <div class="small text-muted mt-2">
                                 {{ $court->vendorProfile?->business_name ?? 'No vendor listed' }} &middot; PHP {{ number_format($court->hourly_rate) }}/hr

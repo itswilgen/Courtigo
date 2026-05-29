@@ -20,9 +20,17 @@ class DashboardController extends Controller
             ->latest()
             ->get();
 
+        $upcomingBookings = $bookings
+            ->whereIn('status', ['pending', 'confirmed'])
+            ->filter(fn (Booking $booking) => $booking->booking_date?->isToday() || $booking->booking_date?->isFuture())
+            ->sortBy('booking_date')
+            ->values();
+
         return view('courtigo.dashboards.player', [
             'user' => $user,
             'bookings' => $bookings->take(6),
+            'nextBooking' => $upcomingBookings->first(),
+            'upcomingBookings' => $upcomingBookings->take(3),
             'recommendedCourts' => Court::with('images')
                 ->where('status', 'active')
                 ->whereHas('timeSlots', fn ($query) => $query->where('status', 'available'))
@@ -33,6 +41,8 @@ class DashboardController extends Controller
             'metrics' => [
                 'bookings' => $bookings->count(),
                 'confirmed' => $bookings->where('status', 'confirmed')->count(),
+                'upcoming' => $upcomingBookings->count(),
+                'completed' => $bookings->where('status', 'completed')->count(),
                 'spent' => $bookings->sum('total_amount'),
                 'favorites' => Court::where('status', 'active')->where('is_featured', true)->count(),
             ],

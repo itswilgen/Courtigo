@@ -23,6 +23,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/player', [DashboardController::class, 'player'])->middleware('role:player,admin')->name('dashboard.player');
     Route::get('/dashboard/vendor', [DashboardController::class, 'vendor'])->middleware('role:vendor,admin')->name('dashboard.vendor');
     Route::get('/dashboard/admin', [DashboardController::class, 'admin'])->middleware('role:admin')->name('dashboard.admin');
+    Route::post('/courts/{court}/reserve', [CourtigoController::class, 'reserve'])->middleware('role:player,admin')->name('courts.reserve');
+    Route::get('/bookings/{booking}/payment', [CourtigoController::class, 'payment'])->middleware('role:player,admin')->name('bookings.payment');
+    Route::post('/bookings/{booking}/payment', [CourtigoController::class, 'storePayment'])->middleware('role:player,admin')->name('bookings.payment.store');
 });
 
 Route::middleware(['auth', 'admin'])
