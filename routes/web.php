@@ -23,6 +23,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/player', [DashboardController::class, 'player'])->middleware('role:player,admin')->name('dashboard.player');
     Route::get('/dashboard/vendor', [DashboardController::class, 'vendor'])->middleware('role:vendor,admin')->name('dashboard.vendor');
     Route::get('/dashboard/admin', [DashboardController::class, 'admin'])->middleware('role:admin')->name('dashboard.admin');
+    Route::get('/courts', [DashboardController::class, 'courts'])->middleware('role:player,admin')->name('courts.index');
+    Route::get('/friends', [DashboardController::class, 'friends'])->middleware('role:player,admin')->name('friends.index');
+    Route::get('/followed', [DashboardController::class, 'followed'])->middleware('role:player,admin')->name('followed.index');
+    Route::get('/bookings', [DashboardController::class, 'bookings'])->middleware('role:player,admin')->name('bookings.index');
+    Route::get('/profile', [DashboardController::class, 'profile'])->middleware('role:player,admin')->name('profile.show');
+    Route::get('/settings', [DashboardController::class, 'settings'])->middleware('role:player,admin')->name('settings.index');
     Route::post('/courts/{court}/reserve', [CourtigoController::class, 'reserve'])->middleware('role:player,admin')->name('courts.reserve');
     Route::get('/bookings/{booking}/payment', [CourtigoController::class, 'payment'])->middleware('role:player,admin')->name('bookings.payment');
     Route::post('/bookings/{booking}/payment', [CourtigoController::class, 'storePayment'])->middleware('role:player,admin')->name('bookings.payment.store');

@@ -14,11 +14,7 @@ class DashboardController extends Controller
     public function player()
     {
         $user = request()->user();
-        $bookings = Booking::with(['court.images', 'payment'])
-            ->where('user_id', $user->id)
-            ->latest('booking_date')
-            ->latest()
-            ->get();
+        $bookings = $this->userBookings();
 
         $upcomingBookings = $bookings
             ->whereIn('status', ['pending', 'confirmed'])
@@ -49,6 +45,56 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function courts()
+    {
+        return view('courtigo.courts.index', [
+            'courts' => Court::with(['images', 'vendorProfile'])
+                ->where('status', 'active')
+                ->latest('is_featured')
+                ->latest()
+                ->take(12)
+                ->get(),
+        ]);
+    }
+
+    public function friends()
+    {
+        return view('courtigo.friends.index');
+    }
+
+    public function followed()
+    {
+        return view('courtigo.followed.index', [
+            'courts' => Court::with(['images', 'vendorProfile'])
+                ->where('status', 'active')
+                ->where('is_featured', true)
+                ->take(6)
+                ->get(),
+        ]);
+    }
+
+    public function bookings()
+    {
+        return view('courtigo.bookings.index', [
+            'bookings' => $this->userBookings(),
+        ]);
+    }
+
+    public function profile()
+    {
+        return view('courtigo.profile.show', [
+            'user' => request()->user(),
+            'bookings' => $this->userBookings(),
+        ]);
+    }
+
+    public function settings()
+    {
+        return view('courtigo.settings.index', [
+            'user' => request()->user(),
+        ]);
+    }
+
     public function vendor()
     {
         $vendor = VendorProfile::with(['courts.bookings', 'activeSubscription.plan'])
@@ -75,5 +121,14 @@ class DashboardController extends Controller
             'vendors' => VendorProfile::with('user')->latest()->take(6)->get(),
             'courts' => Court::with('vendorProfile')->orderByDesc('rating_average')->take(5)->get(),
         ]);
+    }
+
+    private function userBookings()
+    {
+        return Booking::with(['court.images', 'payment'])
+            ->where('user_id', request()->user()->id)
+            ->latest('booking_date')
+            ->latest()
+            ->get();
     }
 }
