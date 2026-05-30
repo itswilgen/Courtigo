@@ -1,7 +1,7 @@
 @extends('layouts.courtigo', ['title' => 'Vendor Application | Courtigo'])
 
 @section('content')
-    <section class="bg-white">
+    <section class="hero-visual hero-bg-vendor bg-white">
         <div class="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
             <div>
                 <p class="text-sm font-bold uppercase tracking-wide text-courtigo-blue">Private vendor onboarding</p>

@@ -1,7 +1,7 @@
 @extends('layouts.courtigo', ['title' => 'Courtigo | Pickleball Court Reservations'])
 
 @section('content')
-    <section class="bg-white">
+    <section class="hero-visual hero-bg-rally bg-white">
         <div class="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.02fr_0.98fr] lg:px-8 lg:py-16">
             <div class="flex flex-col justify-center" data-reveal>
                 <div class="mb-5 w-fit rounded-full border border-green-100 bg-green-50 px-4 py-2 text-sm font-bold text-green-700">Pickleball court rentals made simple</div>
@@ -92,99 +92,7 @@
     </section>
 
     @push('scripts')
-        <script>
-            (() => {
-                const carousel = document.querySelector('[data-court-carousel]');
-
-                if (!carousel) {
-                    return;
-                }
-
-                const previousButton = document.querySelector('[data-court-carousel-prev]');
-                const nextButton = document.querySelector('[data-court-carousel-next]');
-                const dots = [...document.querySelectorAll('[data-court-carousel-dot]')];
-                const cards = [...carousel.children];
-                let autoplay;
-
-                const cardStep = () => {
-                    const firstCard = cards[0];
-
-                    if (!firstCard) {
-                        return carousel.clientWidth;
-                    }
-
-                    return firstCard.getBoundingClientRect().width + 20;
-                };
-
-                const updateDots = () => {
-                    if (!dots.length) {
-                        return;
-                    }
-
-                    const activeIndex = Math.round(carousel.scrollLeft / cardStep());
-
-                    dots.forEach((dot, index) => {
-                        dot.dataset.active = index === activeIndex ? 'true' : 'false';
-                    });
-                };
-
-                const moveNext = () => {
-                    const maxScroll = carousel.scrollWidth - carousel.clientWidth;
-                    const shouldLoop = carousel.scrollLeft + cardStep() >= maxScroll - 4;
-
-                    carousel.scrollTo({
-                        left: shouldLoop ? 0 : carousel.scrollLeft + cardStep(),
-                        behavior: 'smooth',
-                    });
-                };
-
-                const startAutoplay = () => {
-                    if (cards.length < 2) {
-                        return;
-                    }
-
-                    autoplay = window.setInterval(moveNext, 3500);
-                };
-
-                const stopAutoplay = () => {
-                    window.clearInterval(autoplay);
-                };
-
-                previousButton?.addEventListener('click', () => {
-                    stopAutoplay();
-                    carousel.scrollBy({ left: -cardStep(), behavior: 'smooth' });
-                    startAutoplay();
-                });
-
-                nextButton?.addEventListener('click', () => {
-                    stopAutoplay();
-                    moveNext();
-                    startAutoplay();
-                });
-
-                dots.forEach((dot) => {
-                    dot.addEventListener('click', () => {
-                        stopAutoplay();
-                        carousel.scrollTo({
-                            left: Number(dot.dataset.courtCarouselDot) * cardStep(),
-                            behavior: 'smooth',
-                        });
-                        startAutoplay();
-                    });
-                });
-
-                carousel.addEventListener('scroll', () => {
-                    window.requestAnimationFrame(updateDots);
-                });
-                carousel.addEventListener('mouseenter', stopAutoplay);
-                carousel.addEventListener('mouseleave', startAutoplay);
-                carousel.addEventListener('focusin', stopAutoplay);
-                carousel.addEventListener('focusout', startAutoplay);
-
-                updateDots();
-                startAutoplay();
-            })();
-        </script>
+        <script src="{{ asset('js/court-carousel.js') }}" defer></script>
     @endpush
 
     <section id="how-it-works" class="border-y border-slate-200 bg-white">

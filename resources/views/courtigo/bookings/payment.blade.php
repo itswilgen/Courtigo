@@ -25,8 +25,7 @@
 @section('content')
     <style>
         .payment-shell {
-            background:
-                linear-gradient(180deg, #0f172a 0%, #111827 58%, #f8fafc 58%, #f8fafc 100%);
+            background: #f8fafc;
         }
 
         .payment-panel {
@@ -55,7 +54,7 @@
         }
     </style>
 
-    <section class="payment-shell">
+    <section class="hero-visual hero-bg-payment payment-shell">
         <div class="mx-auto max-w-7xl px-4 pt-10 sm:px-6 lg:px-8">
             <div class="grid gap-8 pb-8 text-white lg:grid-cols-[1fr_420px] lg:items-end">
                 <div data-reveal>

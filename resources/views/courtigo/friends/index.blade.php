@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="space-y-6">
-        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
+        <div class="dashboard-hero rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
             <p class="text-sm font-black uppercase tracking-wide text-courtigo-blue">Friends</p>
             <h1 class="mt-1 text-3xl font-black tracking-tight text-courtigo-navy">Build your play circle.</h1>
         </div>

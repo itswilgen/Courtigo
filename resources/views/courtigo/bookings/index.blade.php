@@ -20,7 +20,7 @@
 
 @section('content')
     <section class="space-y-6" data-booking-tabs>
-        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
+        <div class="dashboard-hero alt rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
             <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                 <div>
                     <p class="text-sm font-black uppercase tracking-wide text-courtigo-blue">Reservations</p>
@@ -72,21 +72,5 @@
 @endsection
 
 @push('scripts')
-    <script>
-        (() => {
-            const root = document.querySelector('[data-booking-tabs]');
-            if (!root) return;
-
-            const buttons = root.querySelectorAll('[data-tab-button]');
-            const panels = root.querySelectorAll('[data-tab-panel]');
-
-            buttons.forEach((button) => {
-                button.addEventListener('click', () => {
-                    const key = button.dataset.tabButton;
-                    buttons.forEach((item) => item.dataset.active = String(item === button));
-                    panels.forEach((panel) => panel.classList.toggle('hidden', panel.dataset.tabPanel !== key));
-                });
-            });
-        })();
-    </script>
+    <script src="{{ asset('js/booking-tabs.js') }}" defer></script>
 @endpush

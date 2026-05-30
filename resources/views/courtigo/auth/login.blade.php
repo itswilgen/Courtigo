@@ -1,7 +1,7 @@
 @extends('layouts.courtigo', ['title' => 'Login | Courtigo'])
 
 @section('content')
-    <section class="bg-white">
+    <section class="hero-visual hero-bg-auth bg-white">
         <div class="mx-auto grid min-h-[calc(100vh-153px)] max-w-7xl gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8 lg:py-14">
             <div class="flex flex-col justify-center">
                 <div class="mb-5 w-fit rounded-full border border-green-100 bg-green-50 px-4 py-2 text-sm font-bold text-green-700">Welcome back, player</div>
@@ -58,12 +58,12 @@
                             <span class="text-sm font-semibold text-slate-400">Need help?</span>
                         </div>
 
-                        <button type="submit" class="w-full rounded bg-courtigo-green px-5 py-3 text-sm font-black text-white shadow-sm transition hover:bg-green-600">Log in</button>
+                        <button type="submit" class="w-full rounded bg-courtigo-green px-5 py-3 text-sm font-black text-white shadow-sm">Log in</button>
                     </form>
 
                     <p class="mt-5 text-center text-sm font-semibold text-slate-500">
                         New to Courtigo?
-                        <a href="{{ route('register') }}" class="font-black text-courtigo-blue hover:text-blue-700">Create an account</a>
+                        <a href="{{ route('register') }}" class="font-black text-courtigo-blue">Create an account</a>
                     </p>
 
                     <div class="mt-6 rounded bg-slate-50 p-4 text-sm text-slate-600">

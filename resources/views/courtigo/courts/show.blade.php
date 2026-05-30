@@ -1,7 +1,7 @@
 @extends('layouts.courtigo', ['title' => $court->name.' | Courtigo'])
 
 @section('content')
-    <section class="bg-white">
+    <section class="hero-visual hero-bg-court bg-white">
         <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
             <div class="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
                 <div>
@@ -15,7 +15,7 @@
                     </div>
                 </div>
 
-                <aside class="h-fit rounded border border-slate-200 bg-slate-50 p-5">
+                <aside class="h-fit rounded border border-slate-200 bg-slate-50 p-5" data-reservation-root data-initial-slot="{{ old('court_time_slot_id', request('slot')) }}">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm text-slate-500">Hosted by</p>
@@ -82,54 +82,6 @@
     </section>
 
     @push('scripts')
-        <script>
-            (() => {
-                const slotButtons = [...document.querySelectorAll('[data-slot-option]')];
-                const reserveButton = document.querySelector('[data-reserve-button]');
-                const loginReserveLink = document.querySelector('[data-login-reserve-link]');
-                const summary = document.querySelector('[data-selected-slot-summary]');
-                const selectedSlotInput = document.querySelector('[data-selected-slot-input]');
-                const loginUrl = loginReserveLink ? new URL(loginReserveLink.href) : null;
-                const initialSlot = @json(old('court_time_slot_id', request('slot')));
-
-                slotButtons.forEach((button) => {
-                    button.addEventListener('click', () => {
-                        slotButtons.forEach((slotButton) => {
-                            slotButton.dataset.selected = 'false';
-                            slotButton.setAttribute('aria-pressed', 'false');
-                        });
-
-                        button.dataset.selected = 'true';
-                        button.setAttribute('aria-pressed', 'true');
-
-                        if (summary) {
-                            summary.textContent = `Selected slot: ${button.dataset.slotLabel}`;
-                            summary.classList.remove('hidden');
-                        }
-
-                        if (reserveButton) {
-                            reserveButton.disabled = false;
-                            reserveButton.textContent = `Continue to payment · ${button.dataset.slotLabel}`;
-                        }
-
-                        if (selectedSlotInput) {
-                            selectedSlotInput.value = button.dataset.slotId;
-                        }
-
-                        if (loginReserveLink && loginUrl) {
-                            const redirectUrl = new URL(loginUrl.searchParams.get('redirect'));
-                            redirectUrl.searchParams.set('slot', button.dataset.slotId);
-                            loginUrl.searchParams.set('redirect', redirectUrl.toString());
-                            loginReserveLink.href = loginUrl.toString();
-                            loginReserveLink.textContent = `Log in to reserve ${button.dataset.slotLabel}`;
-                        }
-                    });
-                });
-
-                if (initialSlot) {
-                    document.querySelector(`[data-slot-id="${initialSlot}"]`)?.click();
-                }
-            })();
-        </script>
+        <script src="{{ asset('js/court-reservation.js') }}" defer></script>
     @endpush
 @endsection

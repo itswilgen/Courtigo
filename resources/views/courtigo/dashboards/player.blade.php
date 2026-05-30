@@ -12,7 +12,7 @@
 @section('content')
     <div class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
         <section class="min-w-0 space-y-6">
-            <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
+            <div class="dashboard-hero rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
                 <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                         <p class="text-sm font-black uppercase tracking-wide text-courtigo-blue">Home feed</p>

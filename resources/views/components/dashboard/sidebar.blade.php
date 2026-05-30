@@ -26,16 +26,16 @@
 
 <div class="fixed inset-0 z-40 hidden bg-slate-950/40 backdrop-blur-sm lg:hidden" data-sidebar-overlay></div>
 
-<aside class="fixed inset-y-0 left-0 z-50 flex w-72 -translate-x-full flex-col border-r border-slate-200 bg-white shadow-2xl shadow-slate-950/10 transition duration-300 lg:translate-x-0 lg:shadow-none" data-dashboard-sidebar>
-    <div class="flex h-16 items-center justify-between border-b border-slate-100 px-5">
+<aside class="fixed inset-y-0 left-0 z-50 flex w-72 -translate-x-full flex-col border-r border-white/10 bg-[#001f3f] text-white shadow-2xl shadow-slate-950/10 transition duration-300 lg:translate-x-0 lg:shadow-none" data-dashboard-sidebar>
+    <div class="flex h-16 items-center justify-between border-b border-white/10 px-5">
         <a href="{{ route('dashboard.player') }}" class="flex items-center gap-3">
-            <span class="grid h-10 w-10 place-items-center rounded-2xl bg-courtigo-navy text-sm font-black text-white">CT</span>
+            <span class="grid h-10 w-10 place-items-center rounded-2xl bg-white text-sm font-black text-[#001f3f]">CT</span>
             <span>
-                <span class="block text-lg font-black tracking-tight text-courtigo-navy">Courtigo</span>
-                <span class="block text-xs font-bold text-slate-500">Social courts</span>
+                <span class="block text-lg font-black tracking-tight text-white">Courtigo</span>
+                <span class="block text-xs font-bold text-white/55">Social courts</span>
             </span>
         </a>
-        <button class="grid h-10 w-10 place-items-center rounded-xl text-slate-500 hover:bg-slate-100 lg:hidden" type="button" data-sidebar-close aria-label="Close menu">
+        <button class="grid h-10 w-10 place-items-center rounded-xl text-white/70 hover:bg-white/10 hover:text-white lg:hidden" type="button" data-sidebar-close aria-label="Close menu">
             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
         </button>
     </div>
@@ -46,17 +46,17 @@
                 $active = isset($item['route']) && request()->routeIs($item['route']);
                 $href = isset($item['route']) ? route($item['route']) : $item['url'];
             @endphp
-            <a href="{{ $href }}" class="group flex items-center gap-3 rounded-2xl px-3 py-3 text-sm font-bold transition hover:-translate-y-0.5 hover:bg-slate-100 {{ $active ? 'bg-blue-50 text-courtigo-blue shadow-sm ring-1 ring-blue-100' : 'text-slate-600 hover:text-courtigo-navy' }}">
+            <a href="{{ $href }}" class="group flex items-center gap-3 rounded-2xl px-3 py-3 text-sm font-bold transition hover:-translate-y-0.5 {{ $active ? 'bg-white text-[#001f3f] shadow-sm' : 'text-white hover:bg-white/10 hover:text-white' }}">
                 <svg class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">{!! $icon($item['icon']) !!}</svg>
                 <span>{{ $item['label'] }}</span>
             </a>
         @endforeach
     </nav>
 
-    <div class="border-t border-slate-100 p-3">
+    <div class="border-t border-white/10 p-3">
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button class="flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-sm font-bold text-slate-600 transition hover:bg-red-50 hover:text-red-700" type="submit">
+            <button class="flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-sm font-bold text-white transition hover:bg-white/10 hover:text-white" type="submit">
                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6A2.25 2.25 0 0 0 5.25 5.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" /></svg>
                 Logout
             </button>

@@ -3,7 +3,7 @@
 @section('content')
     <div class="space-y-6">
         <section class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft">
-            <div class="h-36 bg-courtigo-navy"></div>
+            <div class="dashboard-hero h-36"></div>
             <div class="-mt-10 px-5 pb-5">
                 <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                     <div class="flex items-end gap-4">

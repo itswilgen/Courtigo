@@ -1,7 +1,7 @@
 @extends('layouts.courtigo', ['title' => 'Create Account | Courtigo'])
 
 @section('content')
-    <section class="bg-white">
+    <section class="hero-visual hero-bg-auth bg-white">
         <div class="mx-auto grid min-h-[calc(100vh-153px)] max-w-7xl gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8 lg:py-14">
             <div class="flex flex-col justify-center" data-reveal>
                 <div class="mb-5 w-fit rounded-full border border-green-100 bg-green-50 px-4 py-2 text-sm font-bold text-green-700">Create your player account</div>
@@ -65,12 +65,12 @@
                             <input id="password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" required class="mt-2 w-full rounded border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-courtigo-blue focus:ring-4 focus:ring-blue-50" placeholder="Repeat your password">
                         </div>
 
-                        <button type="submit" class="w-full rounded bg-courtigo-green px-5 py-3 text-sm font-black text-white shadow-sm transition hover:bg-green-600">Create account</button>
+                        <button type="submit" class="w-full rounded bg-courtigo-green px-5 py-3 text-sm font-black text-white shadow-sm">Create account</button>
                     </form>
 
                     <p class="mt-5 text-center text-sm font-semibold text-slate-500">
                         Already have an account?
-                        <a href="{{ route('login') }}" class="font-black text-courtigo-blue hover:text-blue-700">Log in</a>
+                        <a href="{{ route('login') }}" class="font-black text-courtigo-blue">Log in</a>
                     </p>
                 </div>
             </div>

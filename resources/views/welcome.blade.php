@@ -10,27 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="{{ asset('js/tailwind-welcome-config.js') }}"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['DM Sans', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-                    },
-                    colors: {
-                        courtigo: {
-                            navy: '#001f3f',
-                            blue: '#3B82F6',
-                            green: '#22C55E',
-                            amber: '#F59E0B',
-                            red: '#EF4444',
-                        },
-                    },
-                },
-            },
-        };
-    </script>
 </head>
 <body class="overflow-x-hidden bg-slate-50 font-sans text-slate-900 antialiased">
     <header class="sticky top-0 z-50 border-b border-white/10 bg-courtigo-navy/95 text-white shadow-sm backdrop-blur">

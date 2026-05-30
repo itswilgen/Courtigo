@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="space-y-6">
-        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
+        <div class="dashboard-hero alt rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
             <p class="text-sm font-black uppercase tracking-wide text-courtigo-blue">Followed</p>
             <h1 class="mt-1 text-3xl font-black tracking-tight text-courtigo-navy">Venues and courts you follow.</h1>
         </div>

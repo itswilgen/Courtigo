@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="space-y-6">
-        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
+        <div class="dashboard-hero rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
             <p class="text-sm font-black uppercase tracking-wide text-courtigo-blue">Account</p>
             <h1 class="mt-1 text-3xl font-black tracking-tight text-courtigo-navy">Settings</h1>
             <p class="mt-2 text-sm leading-6 text-slate-500">Placeholder account controls for the user dashboard architecture.</p>

@@ -3,7 +3,7 @@
 @section('content')
     <div class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
         <section class="min-w-0 space-y-5">
-            <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
+            <div class="dashboard-hero rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
                 <p class="text-sm font-black uppercase tracking-wide text-courtigo-blue">Courts feed</p>
                 <h1 class="mt-1 text-3xl font-black tracking-tight text-courtigo-navy">Find your next court.</h1>
                 <div class="mt-5 grid gap-3 md:grid-cols-[1fr_auto]">
