@@ -56,22 +56,22 @@
 
     <section class="hero-visual hero-bg-payment payment-shell">
         <div class="mx-auto max-w-7xl px-4 pt-10 sm:px-6 lg:px-8">
-            <div class="grid gap-8 pb-8 text-white lg:grid-cols-[1fr_420px] lg:items-end">
+            <div class="grid gap-8 pb-8 text-slate-900 lg:grid-cols-[1fr_420px] lg:items-end">
                 <div data-reveal>
-                    <p class="text-sm font-black uppercase tracking-wide text-emerald-300">Secure your reservation</p>
-                    <h1 class="mt-3 max-w-3xl text-3xl font-black tracking-tight sm:text-4xl">Choose how you want to pay.</h1>
-                    <p class="mt-4 max-w-2xl text-sm leading-6 text-slate-300">
+                    <p class="text-sm font-black uppercase tracking-wide text-courtigo-blue">Secure your reservation</p>
+                    <h1 class="mt-3 max-w-3xl text-3xl font-black tracking-tight text-courtigo-navy sm:text-4xl">Choose how you want to pay.</h1>
+                    <p class="mt-4 max-w-2xl text-sm leading-6 text-slate-600">
                         Your court slot is held while you select a payment method. The venue can verify payment details using your booking reference.
                     </p>
                 </div>
 
-                <div class="rounded border border-white/10 bg-white/10 p-4 backdrop-blur" data-reveal>
+                <div class="rounded border border-slate-200 bg-white p-4 shadow-sm" data-reveal>
                     <div class="flex items-center justify-between gap-4">
                         <div>
-                            <p class="text-xs font-black uppercase tracking-wide text-slate-400">Booking reference</p>
-                            <p class="mt-2 text-2xl font-black">{{ $booking->reference }}</p>
+                            <p class="text-xs font-black uppercase tracking-wide text-slate-500">Booking reference</p>
+                            <p class="mt-2 text-2xl font-black text-courtigo-navy">{{ $booking->reference }}</p>
                         </div>
-                        <span class="rounded bg-emerald-400/10 px-3 py-1 text-xs font-black uppercase tracking-wide text-emerald-200">Slot held</span>
+                        <span class="rounded bg-emerald-50 px-3 py-1 text-xs font-black uppercase tracking-wide text-emerald-700">Slot held</span>
                     </div>
                 </div>
             </div>
@@ -114,7 +114,7 @@
                                         <span class="grid h-12 w-12 place-items-center rounded text-lg font-black {{ $iconClasses[$method['accent']] ?? 'bg-slate-800 text-white' }}">
                                             {{ $methodIcons[$value] ?? 'P' }}
                                         </span>
-                                        <span class="payment-check grid h-7 w-7 shrink-0 place-items-center rounded-full border border-slate-300 bg-white text-xs font-black text-white transition">✓</span>
+                                        <span class="payment-check grid h-7 w-7 shrink-0 place-items-center rounded-full border border-slate-300 bg-white text-xs font-black text-courtigo-navy transition">✓</span>
                                     </span>
                                     <span class="mt-5 block text-xl font-black text-courtigo-navy">{{ $method['label'] }}</span>
                                     <span class="mt-2 block text-sm font-semibold leading-6 text-slate-500">{{ $method['detail'] }}</span>

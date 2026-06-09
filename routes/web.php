@@ -25,6 +25,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/admin', [DashboardController::class, 'admin'])->middleware('role:admin')->name('dashboard.admin');
     Route::get('/courts', [DashboardController::class, 'courts'])->middleware('role:player,admin')->name('courts.index');
     Route::get('/friends', [DashboardController::class, 'friends'])->middleware('role:player,admin')->name('friends.index');
+    Route::get('/groups', [DashboardController::class, 'groups'])->middleware('role:player,admin')->name('groups.index');
+    Route::get('/groups/{group}', [DashboardController::class, 'groupShow'])->middleware('role:player,admin')->name('groups.show');
+    Route::get('/players/{username}', [DashboardController::class, 'profilePreview'])->middleware('role:player,admin')->name('profiles.preview');
     Route::get('/followed', [DashboardController::class, 'followed'])->middleware('role:player,admin')->name('followed.index');
     Route::get('/bookings', [DashboardController::class, 'bookings'])->middleware('role:player,admin')->name('bookings.index');
     Route::get('/profile', [DashboardController::class, 'profile'])->middleware('role:player,admin')->name('profile.show');

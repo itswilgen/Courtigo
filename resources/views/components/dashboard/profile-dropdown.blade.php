@@ -4,9 +4,9 @@
 @endphp
 
 <div class="relative" data-profile-menu>
-    <button class="flex items-center gap-2 rounded-2xl border border-white/15 bg-white/10 p-1.5 transition hover:bg-white/15" type="button" data-profile-button aria-haspopup="true" aria-expanded="false">
-        <span class="grid h-9 w-9 place-items-center rounded-2xl bg-white text-xs font-black text-[#001f3f]">{{ $initials ?: 'U' }}</span>
-        <svg class="hidden h-4 w-4 text-white/70 sm:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
+    <button class="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white p-1.5 text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-100 hover:text-courtigo-navy" type="button" data-profile-button aria-haspopup="true" aria-expanded="false">
+        <span class="grid h-9 w-9 place-items-center rounded-2xl bg-courtigo-navy text-xs font-black text-white">{{ $initials ?: 'U' }}</span>
+        <svg class="hidden h-4 w-4 text-slate-600 sm:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
     </button>
 
     <div class="absolute right-0 mt-3 hidden w-72 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-950/15" data-profile-panel>
@@ -14,7 +14,7 @@
             <div class="flex items-center gap-3">
                 <span class="grid h-12 w-12 place-items-center rounded-2xl bg-courtigo-navy text-sm font-black text-white">{{ $initials ?: 'U' }}</span>
                 <div class="min-w-0">
-                    <p class="truncate font-black text-courtigo-navy">{{ $user?->name }}</p>
+                    <p class="truncate font-black text-slate-800">{{ $user?->name }}</p>
                     <p class="truncate text-sm font-semibold text-slate-500">{{ $user?->email }}</p>
                 </div>
             </div>

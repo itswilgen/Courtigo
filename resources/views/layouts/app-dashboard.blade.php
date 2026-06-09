@@ -4,8 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title ?? 'Dashboard | Courtigo' }}</title>
-    <script src="{{ asset('js/tailwind-dashboard-config.js') }}"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         .dashboard-hero {
             position: relative;
