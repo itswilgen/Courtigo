@@ -6,8 +6,8 @@
         ['label' => 'Groups', 'route' => 'groups.index', 'icon' => 'groups', 'active' => 'groups.*'],
         ['label' => 'Followed Courts', 'route' => 'followed.index', 'icon' => 'star', 'active' => 'followed.*'],
         ['label' => 'My Bookings', 'route' => 'bookings.index', 'icon' => 'calendar', 'active' => 'bookings.*'],
-        ['label' => 'Messages', 'url' => '#', 'icon' => 'chat'],
-        ['label' => 'Notifications', 'url' => '#', 'icon' => 'bell'],
+        ['label' => 'Messages', 'route' => 'messages.index', 'icon' => 'chat', 'active' => 'messages.*'],
+        ['label' => 'Notifications', 'route' => 'notifications.index', 'icon' => 'bell', 'active' => 'notifications.*'],
         ['label' => 'Settings', 'route' => 'settings.index', 'icon' => 'settings', 'active' => 'settings.*'],
     ];
 

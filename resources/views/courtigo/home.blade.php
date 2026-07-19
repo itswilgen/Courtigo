@@ -55,7 +55,7 @@
         <div class="relative" data-reveal>
             <div class="-mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth px-4 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-court-carousel>
                 @forelse($courts as $court)
-                    <a href="{{ route('courts.show', $court) }}" class="group min-w-[84%] snap-start overflow-hidden rounded border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-slate-950/10 sm:min-w-[58%] lg:min-w-[40%]">
+                    <a href="{{ route('courts.show', $court) }}" class="group min-w-[84%] snap-start overflow-hidden rounded border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-slate-950/10 hover:cursor-pointer sm:min-w-[58%] lg:min-w-[40%]">
                         <div class="aspect-[4/3] overflow-hidden bg-slate-200">
                             <img class="h-full w-full object-cover transition duration-500 group-hover:scale-105" src="{{ $court->primaryImage() }}" alt="{{ $court->name }}">
                         </div>
@@ -67,9 +67,8 @@
                                 </div>
                                 <span class="text-sm font-bold text-slate-700">★ {{ $court->rating_average }}</span>
                             </div>
-                            <div class="mt-4 flex items-center justify-between">
+                            <div class="mt-4">
                                 <p class="font-black text-courtigo-navy">₱{{ number_format($court->hourly_rate) }} <span class="text-sm font-medium text-slate-500">/ hour</span></p>
-                                <span class="rounded bg-blue-50 px-3 py-1 text-sm font-bold text-courtigo-blue">View slots</span>
                             </div>
                         </div>
                     </a>

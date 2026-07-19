@@ -48,7 +48,7 @@ class CourtigoController extends Controller
 
     public function show(Court $court)
     {
-        $court->load(['images', 'vendorProfile', 'timeSlots' => fn ($query) => $query->where('status', 'available')->orderBy('slot_date')->orderBy('starts_at'), 'reviews.user']);
+        $court->load(['images', 'vendorProfile', 'timeSlots' => fn ($query) => $query->where('status', 'available')->orderBy('slot_date')->orderBy('starts_at'), 'reviews.user' => fn ($query) => $query->with('user')]);
 
         return view('courtigo.courts.show', compact('court'));
     }
@@ -102,6 +102,72 @@ class CourtigoController extends Controller
         $plans = SubscriptionPlan::where('is_active', true)->get();
 
         return view('courtigo.vendor-apply', compact('plans'));
+    }
+
+    public function toggleFollow(Request $request, Court $court)
+    {
+        $user = $request->user();
+        
+        if ($user->isFollowing($court)) {
+            \App\Models\Follow::where('user_id', $user->id)
+                ->where('court_id', $court->id)
+                ->delete();
+            $isFollowing = false;
+        } else {
+            \App\Models\Follow::create([
+                'user_id' => $user->id,
+                'court_id' => $court->id,
+            ]);
+            $isFollowing = true;
+        }
+
+        if ($request->expectsJson()) {
+            return response()->json(['isFollowing' => $isFollowing]);
+        }
+
+        return back()->with('status', $isFollowing ? 'Court added to favorites' : 'Court removed from favorites');
+    }
+
+    public function storeReview(Request $request, Court $court)
+    {
+        $user = $request->user();
+        
+        // Check if user has booked this court
+        if (!$user->bookings()->where('court_id', $court->id)->exists()) {
+            return back()->withErrors(['review' => 'You must book this court to leave a review.']);
+        }
+
+        $validated = $request->validate([
+            'rating' => 'required|integer|between:1,5',
+            'comment' => 'nullable|string|max:1000',
+        ]);
+
+        // Create or update review
+        \App\Models\Review::updateOrCreate(
+            ['user_id' => $user->id, 'court_id' => $court->id],
+            [
+                'rating' => $validated['rating'],
+                'comment' => $validated['comment'],
+                'is_visible' => true,
+            ]
+        );
+
+        // Update court's rating
+        $this->updateCourtRating($court);
+
+        return back()->with('status', 'Thank you! Your review has been posted.');
+    }
+
+    private function updateCourtRating(Court $court): void
+    {
+        $reviews = $court->reviews()->where('is_visible', true)->get();
+        
+        if ($reviews->count() > 0) {
+            $court->update([
+                'rating_average' => round($reviews->avg('rating'), 2),
+                'rating_count' => $reviews->count(),
+            ]);
+        }
     }
 
     private function authorizePlayerBooking(Request $request, Booking $booking): void

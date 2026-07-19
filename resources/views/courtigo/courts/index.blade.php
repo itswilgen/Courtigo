@@ -102,6 +102,7 @@
     ];
 
     $realCourtCards = $courts->map(fn ($court) => [
+        'id' => $court->id,
         'name' => $court->name,
         'vendor' => $court->vendorProfile?->business_name ?? 'Courtigo Partner',
         'location' => $court->city ?? $court->location ?? 'Metro Cebu',

@@ -2,10 +2,14 @@
 
 @php
     $slots = implode('|', $court['slots'] ?? ['8:00 AM', '10:00 AM', '1:00 PM', '4:00 PM']);
+    // Check if court has an id (database model) or is placeholder data
+    $courtId = $court['id'] ?? null;
+    $isDbCourt = !is_null($courtId) && is_numeric($courtId);
 @endphp
 
-<article
-    {{ $attributes->class(['group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-soft']) }}
+<a 
+    href="{{ $isDbCourt ? route('courts.show', ['court' => $court['id']]) : '#' }}"
+    {{ $attributes->class(['group block overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-soft hover:cursor-pointer']) }}
     data-court-card
     data-court-name="{{ $court['name'] }}"
     data-court-vendor="{{ $court['vendor'] }}"
@@ -40,12 +44,8 @@
 
         <x-courtigo.availability-badge :label="$court['availability']" :tone="$court['availability_tone'] ?? 'available'" />
 
-        <div class="grid grid-cols-[1fr_auto] gap-3">
-            <button class="inline-flex h-11 items-center justify-center gap-2 rounded-2xl bg-courtigo-navy px-4 text-sm font-black text-white transition hover:bg-blue-950" type="button" data-view-slots>
-                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-                View Slots
-            </button>
+        <div class="flex justify-end">
             <x-courtigo.follow-button :following="$court['following'] ?? false" />
         </div>
     </div>
-</article>
+</a>

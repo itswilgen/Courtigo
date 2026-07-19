@@ -167,6 +167,7 @@
             }
         }
     </style>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body class="animate-fade-up bg-slate-50 text-slate-900 antialiased">
     <div class="fixed inset-x-0 top-0 z-50 h-1 bg-transparent">

@@ -73,6 +73,21 @@ class User extends Authenticatable
         return $this->hasMany(Notification::class);
     }
 
+    public function follows()
+    {
+        return $this->hasMany(Follow::class);
+    }
+
+    public function followedCourts()
+    {
+        return $this->belongsToMany(Court::class, 'follows', 'user_id', 'court_id')->withTimestamps();
+    }
+
+    public function isFollowing(Court $court): bool
+    {
+        return $this->followedCourts()->where('court_id', $court->id)->exists();
+    }
+
     public function isRole(string $role): bool
     {
         return $this->role === $role;

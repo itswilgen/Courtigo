@@ -81,7 +81,7 @@
 
             <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
                 <div class="flex items-center justify-between">
-                    <h2 class="text-lg font-black text-courtigo-navy">Notifications</h2>
+                    <a href="{{ route('notifications.index') }}" class="text-lg font-black text-courtigo-navy hover:text-courtigo-blue">Notifications</a>
                     <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-black text-slate-500">{{ $notifications->count() }}</span>
                 </div>
                 <div class="mt-4 space-y-3">
@@ -94,6 +94,7 @@
                         <p class="text-sm text-slate-500">No notifications yet.</p>
                     @endforelse
                 </div>
+                <a href="{{ route('notifications.index') }}" class="mt-4 inline-flex text-sm font-black text-courtigo-blue hover:text-courtigo-navy">View all notifications <span class="ml-1" aria-hidden="true">&rarr;</span></a>
             </section>
 
             <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">

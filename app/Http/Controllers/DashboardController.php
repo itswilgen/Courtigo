@@ -8,6 +8,8 @@ use App\Models\Payment;
 use App\Models\SubscriptionPlan;
 use App\Models\User;
 use App\Models\VendorProfile;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -99,11 +101,13 @@ class DashboardController extends Controller
 
     public function followed()
     {
+        $user = request()->user();
+        
         return view('courtigo.followed.index', [
-            'courts' => Court::with(['images', 'vendorProfile'])
+            'courts' => $user->followedCourts()
+                ->with(['images', 'vendorProfile'])
                 ->where('status', 'active')
-                ->where('is_featured', true)
-                ->take(6)
+                ->latest()
                 ->get(),
         ]);
     }
@@ -113,6 +117,34 @@ class DashboardController extends Controller
         return view('courtigo.bookings.index', [
             'bookings' => $this->userBookings(),
         ]);
+    }
+
+    public function messages(Request $request)
+    {
+        $data = $this->communityPlaceholders();
+        $conversations = [
+            ['name' => 'Friday Badminton Club', 'type' => 'group', 'slug' => 'friday-badminton-club', 'avatar' => 'FB', 'preview' => 'Two slots are still open for Saturday.', 'time' => '10:24 AM', 'unread' => 2],
+            ['name' => 'Alyssa Cruz', 'type' => 'player', 'slug' => 'alyssa-cruz', 'avatar' => $data['friends'][0]['avatar'], 'preview' => 'Want to reserve a court after work?', 'time' => '9:18 AM', 'unread' => 1],
+            ['name' => 'Hoop Night PH', 'type' => 'group', 'slug' => 'hoop-night-ph', 'avatar' => 'HN', 'preview' => 'Court confirmed for Friday night.', 'time' => 'Yesterday', 'unread' => 0],
+            ['name' => 'Marco Reyes', 'type' => 'player', 'slug' => 'marco-reyes', 'avatar' => $data['friends'][1]['avatar'], 'preview' => 'See you at 6 PM.', 'time' => 'Yesterday', 'unread' => 0],
+        ];
+        $active = collect($conversations)->firstWhere('slug', $request->string('conversation')->toString()) ?? $conversations[0];
+
+        return view('courtigo.messages.index', array_merge($data, compact('conversations', 'active')));
+    }
+
+    public function notifications()
+    {
+        $notifications = request()->user()->notifications()->latest()->get();
+
+        return view('courtigo.notifications.index', compact('notifications'));
+    }
+
+    public function markNotificationsRead(Request $request): RedirectResponse
+    {
+        $request->user()->notifications()->whereNull('read_at')->update(['read_at' => now()]);
+
+        return back()->with('status', 'All notifications marked as read.');
     }
 
     public function profile()

@@ -30,9 +30,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/players/{username}', [DashboardController::class, 'profilePreview'])->middleware('role:player,admin')->name('profiles.preview');
     Route::get('/followed', [DashboardController::class, 'followed'])->middleware('role:player,admin')->name('followed.index');
     Route::get('/bookings', [DashboardController::class, 'bookings'])->middleware('role:player,admin')->name('bookings.index');
+    Route::get('/messages', [DashboardController::class, 'messages'])->middleware('role:player,admin')->name('messages.index');
+    Route::get('/notifications', [DashboardController::class, 'notifications'])->middleware('role:player,admin')->name('notifications.index');
+    Route::patch('/notifications/read-all', [DashboardController::class, 'markNotificationsRead'])->middleware('role:player,admin')->name('notifications.read-all');
     Route::get('/profile', [DashboardController::class, 'profile'])->middleware('role:player,admin')->name('profile.show');
     Route::get('/settings', [DashboardController::class, 'settings'])->middleware('role:player,admin')->name('settings.index');
     Route::post('/courts/{court}/reserve', [CourtigoController::class, 'reserve'])->middleware('role:player,admin')->name('courts.reserve');
+    Route::post('/courts/{court}/follow', [CourtigoController::class, 'toggleFollow'])->middleware('role:player,admin')->name('courts.follow');
+    Route::post('/courts/{court}/reviews', [CourtigoController::class, 'storeReview'])->middleware('role:player,admin')->name('reviews.store');
     Route::get('/bookings/{booking}/payment', [CourtigoController::class, 'payment'])->middleware('role:player,admin')->name('bookings.payment');
     Route::post('/bookings/{booking}/payment', [CourtigoController::class, 'storePayment'])->middleware('role:player,admin')->name('bookings.payment.store');
 });

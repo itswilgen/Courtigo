@@ -72,6 +72,16 @@ class Court extends Model
         return $this->hasMany(Review::class);
     }
 
+    public function follows()
+    {
+        return $this->hasMany(Follow::class);
+    }
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'court_id', 'user_id')->withTimestamps();
+    }
+
     public function primaryImage(): string
     {
         return $this->images->firstWhere('is_primary', true)?->image_path
